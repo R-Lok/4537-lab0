@@ -13,6 +13,10 @@ class Game {
             this.container.appendChild(this.buttons[i].btn);
         }
     }
+
+    endSession() {
+        this.container.remove();
+    }
 }
 
 class Button {
@@ -32,6 +36,17 @@ function selectRandomColor() {
 
 document.getElementById('go-button').addEventListener('click', e => {
     e.preventDefault()
+    if(!checkValidInput()) {
+        alert("Number of buttons must be between 3 and 7 inclusive.")
+        return
+    }
+    if(game)
+        game.endSession()
     game = new Game()
     game.createButtons(5)
 })
+
+function checkValidInput(){
+    const inputValue = parseInt(document.getElementById('num-buttons-input').value)
+    return inputValue >= 3 && inputValue <= 7
+}
