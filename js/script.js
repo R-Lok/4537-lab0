@@ -36,17 +36,18 @@ function selectRandomColor() {
 
 document.getElementById('go-button').addEventListener('click', e => {
     e.preventDefault()
-    if(!checkValidInput()) {
+    const inputValue = parseInt(document.getElementById('num-buttons-input').value)
+
+    if(!checkValidInput(inputValue)) {
         alert("Number of buttons must be between 3 and 7 inclusive.")
         return
     }
     if(game)
         game.endSession()
     game = new Game()
-    game.createButtons(5)
+    game.createButtons(inputValue)
 })
 
-function checkValidInput(){
-    const inputValue = parseInt(document.getElementById('num-buttons-input').value)
+function checkValidInput(inputValue){
     return inputValue >= 3 && inputValue <= 7
 }
