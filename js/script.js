@@ -24,6 +24,9 @@ class Button {
     constructor(number) {
         this.btn = document.createElement('button')
         this.btn.innerText = number
+        this.btn.style.height = '5em'
+        this.btn.style.width = '10em'
+        this.btn.style.margin = '0.5em'
         this.btn.style.backgroundColor = selectRandomColor();
     }
 }
