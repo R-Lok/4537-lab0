@@ -1,4 +1,3 @@
-
 let game;
 class Game {
     constructor(numButtons) {
@@ -39,7 +38,7 @@ document.getElementById('go-button').addEventListener('click', e => {
     const inputValue = parseInt(document.getElementById('num-buttons-input').value)
 
     if(!checkValidInput(inputValue)) {
-        alert("Number of buttons must be between 3 and 7 inclusive.")
+        alert(inputWarning)
         return
     }
     if(game)
