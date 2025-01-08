@@ -3,6 +3,8 @@ class Game {
     constructor(numButtons) {
         this.buttons = []
         this.container = document.createElement('div')
+        this.container.style.width = '100%'
+        this.container.style.height = '90%'
         document.body.appendChild(this.container)
     }
 
