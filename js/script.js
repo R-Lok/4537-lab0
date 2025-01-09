@@ -18,8 +18,19 @@ class Game {
     }
 
     startGame() {
-        for (let i = 0; i < this.numButtons; i++) {
-            this.buttons[i].moveButton(this.container.offsetHeight, this.container.offsetWidth)
+        const MILLISECONDS_PER_SECOND = 1000;
+        setTimeout(() => {
+            this.shuffleButtons()
+        }, this.numButtons * MILLISECONDS_PER_SECOND)
+    }
+
+    async shuffleButtons() {
+        for (let i = 0; i < this.numButtons; ++i) {
+            for (let i = 0; i < this.numButtons; i++) {
+                this.buttons[i].moveButton(this.container.offsetHeight, this.container.offsetWidth)
+                
+            }
+            await sleep(2000)
         }
     }
 
@@ -90,4 +101,8 @@ document.getElementById('go-button').addEventListener('click', e => {
 
 function checkValidInput(inputValue) {
     return inputValue >= 3 && inputValue <= 7
+}
+
+async function sleep(ms) { 
+    return new Promise(resolve => setTimeout(resolve, ms))
 }
