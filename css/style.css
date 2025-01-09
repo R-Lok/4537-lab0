@@ -4,6 +4,10 @@ body {
     box-sizing: border-box;
     padding: 0;
     margin: 2vh 2vw;
+    display: grid;
+    grid-template-areas: "form"
+                         "game";
+    grid-template-rows: auto 1fr;
 }
 
 label {
@@ -11,7 +15,8 @@ label {
 }
 
 form {
-    height: 5%;
+    grid-area: form;
+    height: fit-content;
 }
 
 /* Override default styling for disabled buttons to avoid font color/button color changing */

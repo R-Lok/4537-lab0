@@ -16,16 +16,9 @@ class Game {
             const button = new Button(i + 1)
             this.buttons.push(button)
             button.btn.addEventListener('click', (e) => {
-                if(this.nextNumber == button.id) {
-                    this.nextNumber++
-                    button.disable()
-                    button.showText()
-                    if(this.nextNumber > this.numButtons) {
-                        this.#win()
-                    }
-                } else {
-                    this.#lose()
-                }
+                button.disable()
+                button.showText()
+                this.#checkCorrect(button.id)
             })
             this.container.appendChild(this.buttons[i].btn);
         }
@@ -47,6 +40,15 @@ class Game {
         alert(loseMsg)
         this.#disableButtons()
         this.#showButtonsText()
+    }
+
+    #checkCorrect(number) {
+        if(this.nextNumber != number) {
+            this.#lose()
+        }
+        if(++this.nextNumber > this.numButtons) {
+            this.#win()
+        }
     }
 
     async #shuffleButtons() {
