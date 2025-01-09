@@ -17,20 +17,26 @@ class Game {
         }
     }
 
-    startGame() {
+    async startGame() {
         const MILLISECONDS_PER_SECOND = 1000;
-        setTimeout(() => {
-            this.shuffleButtons()
-        }, this.numButtons * MILLISECONDS_PER_SECOND)
+        await sleep(this.numButtons * MILLISECONDS_PER_SECOND)
+        await this.#shuffleButtons()
+        this.#hideButtons()
     }
 
-    async shuffleButtons() {
+    async #shuffleButtons() {
         for (let i = 0; i < this.numButtons; ++i) {
             for (let i = 0; i < this.numButtons; i++) {
                 this.buttons[i].moveButton(this.container.offsetHeight, this.container.offsetWidth)
                 
             }
             await sleep(2000)
+        }
+    }
+
+    #hideButtons() {
+        for(let i = 0; i < this.numButtons; ++i) {
+            this.buttons[i].hide()
         }
     }
 
@@ -43,7 +49,7 @@ class Button {
     constructor(number) {
         this.btn = document.createElement('button')
         this.btn.innerText = number
-        this.btn.id = number
+        this.id = number
         this.btn.style.height = '5em'
         this.btn.style.width = '10em'
         this.btn.style.margin = '0.5em'
@@ -56,6 +62,10 @@ class Button {
         this.position.randomizePosition(this.btn.offsetHeight, this.btn.offsetWidth, containerHeight, containerWidth)
         this.btn.style.top = this.position.top
         this.btn.style.left = this.position.left
+    }
+
+    hide() {
+        this.btn.innerText = ''
     }
 }
 
