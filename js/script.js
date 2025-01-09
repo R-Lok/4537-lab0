@@ -8,11 +8,25 @@ class Game {
         this.container.style.height = '90%'
         this.container.style.position = 'relative'
         document.body.appendChild(this.container)
+        this.nextNumber = 1;
     }
 
     createButtons() {
         for (let i = 0; i < this.numButtons; i++) {
-            this.buttons.push(new Button(i + 1))
+            const button = new Button(i + 1)
+            this.buttons.push(button)
+            button.btn.addEventListener('click', (e) => {
+                if(this.nextNumber == button.id) {
+                    this.nextNumber++
+                    button.disable()
+                    button.showText()
+                    if(this.nextNumber > this.numButtons) {
+                        this.#win()
+                    }
+                } else {
+                    this.#lose()
+                }
+            })
             this.container.appendChild(this.buttons[i].btn);
         }
     }
@@ -22,6 +36,17 @@ class Game {
         await sleep(this.numButtons * MILLISECONDS_PER_SECOND)
         await this.#shuffleButtons()
         this.#hideButtons()
+        this.#enableButtons()
+    }
+
+    #win() {
+        alert(winMsg)
+    }
+
+    #lose() {
+        alert(loseMsg)
+        this.#disableButtons()
+        this.#showButtons()
     }
 
     async #shuffleButtons() {
@@ -30,13 +55,33 @@ class Game {
                 this.buttons[i].moveButton(this.container.offsetHeight, this.container.offsetWidth)
                 
             }
-            await sleep(2000)
+            if (i != this.numButtons - 1) {
+                await sleep(2000)
+            }
         }
     }
 
     #hideButtons() {
         for(let i = 0; i < this.numButtons; ++i) {
-            this.buttons[i].hide()
+            this.buttons[i].hideText()
+        }
+    }
+
+    #showButtons() {
+        for (let i = 0; i < this.numButtons; ++i) {
+            this.buttons[i].showText()
+        }
+    }
+
+    #enableButtons() {
+        for(let i = 0; i < this.numButtons; ++i) {
+            this.buttons[i].enable()
+        }
+    }
+
+    #disableButtons() {
+        for (let i = 0; i < this.numButtons; ++i) {
+            this.buttons[i].disable()
         }
     }
 
@@ -53,6 +98,7 @@ class Button {
         this.btn.style.height = '5em'
         this.btn.style.width = '10em'
         this.btn.style.margin = '0.5em'
+        this.btn.disabled = true
         this.btn.style.backgroundColor = selectRandomColor();
         this.position = new Position()
     }
@@ -64,8 +110,20 @@ class Button {
         this.btn.style.left = this.position.left
     }
 
-    hide() {
+    hideText() {
         this.btn.innerText = ''
+    }
+
+    showText() {
+        this.btn.innerText = this.id
+    }
+
+    disable() {
+        this.btn.disabled = true
+    }
+
+    enable() {
+        this.btn.disabled = false
     }
 }
 

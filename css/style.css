@@ -13,3 +13,12 @@ label {
 form {
     height: 5%;
 }
+
+/* Override default styling for disabled buttons to avoid font color/button color changing */
+button:disabled {
+    pointer-events: none;
+    opacity: 1;
+    background-color: initial;
+    color: initial;
+    cursor: default;
+}
