@@ -1,3 +1,5 @@
+
+
 let game;
 class Game {
     constructor(numButtons) {
@@ -166,6 +168,9 @@ document.getElementById('go-button').addEventListener('click', e => {
     game.createButtons()
     game.startGame()
 })
+
+document.getElementById('num-buttons-label').innerText = labelMsg
+document.getElementById('go-button').innerText = buttonText
 
 function checkValidInput(inputValue) {
     const MIN = 3
