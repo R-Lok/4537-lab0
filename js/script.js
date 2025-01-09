@@ -35,7 +35,7 @@ class Game {
         const MILLISECONDS_PER_SECOND = 1000;
         await sleep(this.numButtons * MILLISECONDS_PER_SECOND)
         await this.#shuffleButtons()
-        this.#hideButtons()
+        this.#hideButtonsText()
         this.#enableButtons()
     }
 
@@ -46,7 +46,7 @@ class Game {
     #lose() {
         alert(loseMsg)
         this.#disableButtons()
-        this.#showButtons()
+        this.#showButtonsText()
     }
 
     async #shuffleButtons() {
@@ -61,13 +61,13 @@ class Game {
         }
     }
 
-    #hideButtons() {
+    #hideButtonsText() {
         for(let i = 0; i < this.numButtons; ++i) {
             this.buttons[i].hideText()
         }
     }
 
-    #showButtons() {
+    #showButtonsText() {
         for (let i = 0; i < this.numButtons; ++i) {
             this.buttons[i].showText()
         }
@@ -95,9 +95,7 @@ class Button {
         this.btn = document.createElement('button')
         this.btn.innerText = number
         this.id = number
-        this.btn.style.height = '5em'
-        this.btn.style.width = '10em'
-        this.btn.style.margin = '0.5em'
+        this.btn.classList.add('game-button')
         this.btn.disabled = true
         this.btn.style.backgroundColor = selectRandomColor();
         this.position = new Position()
@@ -168,7 +166,9 @@ document.getElementById('go-button').addEventListener('click', e => {
 })
 
 function checkValidInput(inputValue) {
-    return inputValue >= 3 && inputValue <= 7
+    const MIN = 3
+    const MAX = 7
+    return inputValue >= MIN && inputValue <= MAX
 }
 
 async function sleep(ms) { 
