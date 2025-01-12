@@ -1,4 +1,7 @@
-
+/**
+ * Ryan Lok (Set O)
+ * Lab 0
+ */
 
 let game;
 class Game {
@@ -137,7 +140,8 @@ class Position {
 
     randomizePosition(offsety, offsetx, containerHeight, containerWidth) {
 
-        // Convert the button's dimensions from pixels to percentages of the container
+        //ChatGPT was used to figure out the equations used in this function to avoid the buttons moving out of the container.
+        //Convert the button's dimensions from pixels to percentages of the container
         const maxTop = containerHeight - parseFloat(offsety);
         const maxLeft = containerWidth - parseFloat(offsetx);
 
@@ -148,6 +152,8 @@ class Position {
 }
 
 function selectRandomColor() {
+    //ChatGPT was used here to figure out how to make truly random colors rather than using preset values.
+
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
     const b = Math.floor(Math.random() * 256);
