@@ -1,0 +1,23 @@
+#nav-buttons-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav-button {
+    width: 25vw;
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    background-color: gray;
+    font-size: 24px;
+    border-radius: 10%;
+}
+
+.nav-button:active {
+    background-color: rgb(188, 188, 188);
+}
