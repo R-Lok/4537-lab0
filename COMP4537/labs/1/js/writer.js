@@ -5,10 +5,6 @@ class Note {
         this.text = string
     }
 
-    setText(string) {
-        this.text = string
-    }
-
     removeNote() {
         const idx = notes.findIndex(element => element === this)
         notes.splice(idx, 1)
@@ -46,7 +42,7 @@ class NoteElement {
     }
 
     #updateNote() {
-        this.note.setText(this.textArea.value)
+        this.note.text = this.textArea.value
         storeToLocalStorage()
     }
 
@@ -59,6 +55,7 @@ class NoteElement {
 (function(){
     //inject strings into the page
     document.getElementById("add-button").innerText = writerAddButton
+    document.getElementById("last-stored-text").innerText = writerLastStoredText
 
     //immediately retrieve data from localStorage
     retrieveFromLocalStorage()
@@ -81,6 +78,7 @@ document.getElementById("add-button").addEventListener("click", (e) => {
 function storeToLocalStorage() {
     const stringifiedArr = JSON.stringify(notes)
     localStorage.setItem("data", stringifiedArr)
+    updateTimeStamp()
 }
 
 function retrieveFromLocalStorage() {
@@ -91,4 +89,12 @@ function retrieveFromLocalStorage() {
             return new Note(obj.text)
         })
     }
+}
+
+function updateTimeStamp() {
+    const span = document.getElementById("timestamp")
+    const currentDate = new Date()
+
+    //Used some ChatGPT here to modify my logic to ensure the timestamps have 2 digits at all times for each field
+    span.innerText = `${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}:${currentDate.getSeconds().toString().padStart(2, '0')}`;
 }

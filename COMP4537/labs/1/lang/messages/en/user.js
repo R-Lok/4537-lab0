@@ -5,3 +5,4 @@ let indexReaderButton = "Go to reader"
 
 let writerAddButton = "Add"
 let writerRemoveButton = "Remove"
+let writerLastStoredText = "Last stored at:"
