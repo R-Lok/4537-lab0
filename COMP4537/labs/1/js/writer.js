@@ -1,4 +1,5 @@
 
+let notes = []
 class Note {
     constructor(string = "") {
         this.text = string
@@ -6,6 +7,12 @@ class Note {
 
     setText(string) {
         this.text = string
+    }
+
+    removeNote() {
+        const idx = notes.findIndex(element => element === this)
+        notes.splice(idx, 1)
+        storeToLocalStorage()
     }
 }
 class NoteElement {
@@ -16,6 +23,8 @@ class NoteElement {
         this.UIelement = container
 
         const textArea = document.createElement("textarea")
+        this.textArea = textArea
+
         const btn = document.createElement("button")
 
         container.classList.add("editable-note")
@@ -23,14 +32,30 @@ class NoteElement {
         container.appendChild(btn)
 
         textArea.value = note.text
+        textArea.addEventListener("input", (e) => {
+            this.#updateNote()
+        })
+
         btn.textContent = writerRemoveButton
+        btn.addEventListener("click", (e) => {
+            this.#deleteNote()
+        })
 
         document.getElementById("notes-container").append(container)
         storeToLocalStorage()
     }
+
+    #updateNote() {
+        this.note.setText(this.textArea.value)
+        storeToLocalStorage()
+    }
+
+    #deleteNote() {
+        this.note.removeNote()
+        this.UIelement.remove()
+    }
 }
 
-let notes = [];
 (function(){
     //inject strings into the page
     document.getElementById("add-button").innerText = writerAddButton
