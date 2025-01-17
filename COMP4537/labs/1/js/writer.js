@@ -1,17 +1,6 @@
 
 let notes = []
-class Note {
-    constructor(string = "") {
-        this.text = string
-    }
-
-    removeNote() {
-        const idx = notes.findIndex(element => element === this)
-        notes.splice(idx, 1)
-        storeToLocalStorage()
-    }
-}
-class NoteElement {
+class NoteWriteElement {
     constructor(note) {
         this.note = note
 
@@ -47,7 +36,8 @@ class NoteElement {
     }
 
     #deleteNote() {
-        this.note.removeNote()
+        this.note.removeNote(notes)
+        storeToLocalStorage()
         this.UIelement.remove()
     }
 }
@@ -56,14 +46,15 @@ class NoteElement {
     //inject strings into the page
     document.getElementById("add-button").innerText = writerAddButton
     document.getElementById("last-stored-text").innerText = writerLastStoredText
+    document.getElementById("writer-title").innerText = writerTitle
 
     //immediately retrieve data from localStorage
-    retrieveFromLocalStorage()
+    retrieveFromLocalStorage(notes)
 
     if(notes.length != 0) {
         const container = document.getElementById("notes-container")
         for(let i = 0; i < notes.length; i++) {
-            const nElement = new NoteElement(notes[i])
+            const nElement = new NoteWriteElement(notes[i])
             container.appendChild(nElement.UIelement)
         }
     }
@@ -72,23 +63,13 @@ class NoteElement {
 document.getElementById("add-button").addEventListener("click", (e) => {
     const note = new Note()
     notes.push(note)
-    new NoteElement(note)
+    new NoteWriteElement(note)
 })
 
 function storeToLocalStorage() {
     const stringifiedArr = JSON.stringify(notes)
     localStorage.setItem("data", stringifiedArr)
     updateTimeStamp()
-}
-
-function retrieveFromLocalStorage() {
-    const stringifiedArr = localStorage.getItem("data")
-    if (stringifiedArr) {
-        const parsedNotes = JSON.parse(stringifiedArr)
-        notes = parsedNotes.map(obj => {
-            return new Note(obj.text)
-        })
-    }
 }
 
 function updateTimeStamp() {

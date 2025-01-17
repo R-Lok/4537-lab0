@@ -6,3 +6,6 @@ let indexReaderButton = "Go to reader"
 let writerAddButton = "Add"
 let writerRemoveButton = "Remove"
 let writerLastStoredText = "Last stored at:"
+let writerTitle = "Note writer"
+
+let readerTitle = "Note reader"
