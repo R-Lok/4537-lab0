@@ -31,3 +31,5 @@ function renderNotes(notes) {
         new NoteReadElement(notes[i].text)
     }
 }
+
+//need to implement timestamp thing
