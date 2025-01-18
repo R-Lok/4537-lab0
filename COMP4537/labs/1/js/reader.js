@@ -10,6 +10,7 @@ function createNoteElement(string) {
 (function() {
     document.getElementById("reader-title").innerText = readerTitle
     document.getElementById("return-button").innerText = returnBtnText
+    document.getElementById("last-updated").innerText = readerLastUpdatedText
     
     document.getElementById("return-button").addEventListener("click", (e) => {
         window.location.href="../1/"
@@ -31,6 +32,5 @@ function renderNotes(notes) {
     for(let i = 0; i < notes.length; i++) {
         createNoteElement(notes[i].text)
     }
+    updateTimeStamp()
 }
-
-//need to implement timestamp thing

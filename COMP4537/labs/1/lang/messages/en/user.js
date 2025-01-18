@@ -9,5 +9,6 @@ let writerLastStoredText = "Last stored at:"
 let writerTitle = "Note writer"
 
 let readerTitle = "Note reader"
+let readerLastUpdatedText = "Last updated at: "
 
 let returnBtnText = "Back to Main Menu"
