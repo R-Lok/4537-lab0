@@ -9,6 +9,54 @@ class Note {
     }
 }
 
+class NoteElement {
+    constructor(note, notes, editable = true) {
+        this.note = note
+
+        const container = document.createElement("div")
+        this.UIelement = container
+
+        const textArea = document.createElement("textarea")
+        this.textArea = textArea
+
+        const btn = document.createElement("button")
+
+        container.classList.add("editable-note")
+        container.appendChild(textArea)
+
+        textArea.value = note.text
+        textArea.addEventListener("input", (e) => {
+            this.#updateNote()
+            storeToLocalStorage(notes)
+        })
+
+        if (editable) {
+            btn.textContent = writerRemoveButton
+            btn.addEventListener("click", (e) => {
+                this.#deleteNote(notes)
+                storeToLocalStorage(notes)
+            })
+            container.appendChild(btn)
+        } else {
+            textArea.disabled = true
+        }
+        document.getElementById("notes-container").append(container)
+        storeToLocalStorage(notes)
+    }
+
+    //Updates the text attribute of the note tied to this UIElement and stores to localStorage
+    #updateNote() {
+        this.note.text = this.textArea.value
+    }
+
+    //Removes the note from the array and deletes UI element
+    #deleteNote(notes) {
+        this.note.removeNote(notes)
+        this.UIelement.remove()
+    }
+}
+
+//Retrieves the notes from local storage and populates the array
 function retrieveFromLocalStorage(arr) {
     const stringifiedArr = localStorage.getItem("data")
     if (stringifiedArr) {
@@ -16,6 +64,13 @@ function retrieveFromLocalStorage(arr) {
         arr.length = 0
         arr.push(...parsedNotes.map(obj => {
             return new Note(obj.text)
-        })) 
+        }))
     }
+}
+
+//Store the notes array to local storage
+function storeToLocalStorage(notes) {
+    const stringifiedArr = JSON.stringify(notes)
+    localStorage.setItem("data", stringifiedArr)
+    updateTimeStamp()
 }

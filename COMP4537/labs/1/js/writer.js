@@ -1,50 +1,8 @@
 
-let notes = []
-class NoteWriteElement {
-    constructor(note) {
-        this.note = note
 
-        const container = document.createElement ("div")
-        this.UIelement = container
-
-        const textArea = document.createElement("textarea")
-        this.textArea = textArea
-
-        const btn = document.createElement("button")
-
-        container.classList.add("editable-note")
-        container.appendChild(textArea)
-        container.appendChild(btn)
-
-        textArea.value = note.text
-        textArea.addEventListener("input", (e) => {
-            this.#updateNote()
-        })
-
-        btn.textContent = writerRemoveButton
-        btn.addEventListener("click", (e) => {
-            this.#deleteNote()
-        })
-
-        document.getElementById("notes-container").append(container)
-        storeToLocalStorage()
-    }
-
-    //Updates the text attribute of the note tied to this UIElement and stores to localStorage
-    #updateNote() {
-        this.note.text = this.textArea.value
-        storeToLocalStorage()
-    }
-
-    //Removes the note from the array and deletes UI element
-    #deleteNote() {
-        this.note.removeNote(notes)
-        storeToLocalStorage()
-        this.UIelement.remove()
-    }
-}
 
 (function(){
+    let notes = [];
     //inject strings into the page
     document.getElementById("add-button").innerText = writerAddButton
     document.getElementById("last-stored-text").innerText = writerLastStoredText
@@ -55,7 +13,7 @@ class NoteWriteElement {
     document.getElementById("add-button").addEventListener("click", (e) => {
         const note = new Note()
         notes.push(note)
-        new NoteWriteElement(note)
+        new NoteElement(note, notes)
     })
 
     document.getElementById("return-button").addEventListener("click", (e) => {
@@ -69,17 +27,8 @@ class NoteWriteElement {
     if(notes.length != 0) {
         const container = document.getElementById("notes-container")
         for(let i = 0; i < notes.length; i++) {
-            const nElement = new NoteWriteElement(notes[i])
+            const nElement = new NoteElement(notes[i], notes)
             container.appendChild(nElement.UIelement)
         }
     }
 })()
-
-
-
-//Store the notes array to local storage
-function storeToLocalStorage() {
-    const stringifiedArr = JSON.stringify(notes)
-    localStorage.setItem("data", stringifiedArr)
-    updateTimeStamp()
-}
