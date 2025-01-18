@@ -1,6 +1,3 @@
-
-
-
 (function(){
     let notes = [];
     //inject strings into the page
@@ -25,10 +22,6 @@
 
     //if retrieved notes is not empty, populate the notes-container element
     if(notes.length != 0) {
-        const container = document.getElementById("notes-container")
-        for(let i = 0; i < notes.length; i++) {
-            const nElement = new NoteElement(notes[i], notes)
-            container.appendChild(nElement.UIelement)
-        }
+        renderNotes(notes, true)
     }
 })()

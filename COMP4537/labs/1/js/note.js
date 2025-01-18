@@ -41,7 +41,6 @@ class NoteElement {
             textArea.disabled = true
         }
         document.getElementById("notes-container").append(container)
-        storeToLocalStorage(notes)
     }
 
     //Updates the text attribute of the note tied to this UIElement and stores to localStorage
@@ -72,5 +71,14 @@ function retrieveFromLocalStorage(arr) {
 function storeToLocalStorage(notes) {
     const stringifiedArr = JSON.stringify(notes)
     localStorage.setItem("data", stringifiedArr)
+    updateTimeStamp()
+}
+
+//renders the notes in editable or non editable mode (writer vs reader)
+function renderNotes(notes, editable) {
+    document.getElementById("notes-container").replaceChildren()
+    for(let i = 0; i < notes.length; i++) {
+        new NoteElement(notes[i], notes, editable)
+    }
     updateTimeStamp()
 }

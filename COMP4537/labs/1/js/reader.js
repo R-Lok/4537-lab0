@@ -10,18 +10,12 @@
     const notes = []
 
     retrieveFromLocalStorage(notes)
-    renderNotes(notes)
-
+    renderNotes(notes, false)
+    
+    //Fetch notes from localStorage every 2 seconds
     setInterval(() => {
         retrieveFromLocalStorage(notes)
-        renderNotes(notes)
+        renderNotes(notes, false)
     }, 2000)
 })()
 
-function renderNotes(notes) {
-    document.getElementById("notes-container").replaceChildren()
-    for(let i = 0; i < notes.length; i++) {
-        new NoteElement(notes[i], notes, false)
-    }
-    updateTimeStamp()
-}
