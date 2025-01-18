@@ -2,3 +2,8 @@
     width: 100px;
     height: 50px;
 }
+
+#return-button {
+    position: fixed;
+    bottom: 1vh;
+}

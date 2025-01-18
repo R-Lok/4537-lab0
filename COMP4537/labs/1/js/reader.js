@@ -9,6 +9,11 @@ function createNoteElement(string) {
 
 (function() {
     document.getElementById("reader-title").innerText = readerTitle
+    document.getElementById("return-button").innerText = returnBtnText
+    
+    document.getElementById("return-button").addEventListener("click", (e) => {
+        window.location.href="../1/"
+    })
 
     const notes = []
 
