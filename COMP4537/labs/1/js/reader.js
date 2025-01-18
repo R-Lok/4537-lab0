@@ -1,13 +1,9 @@
-class NoteReadElement {
-    constructor(string) {
-        const container = document.createElement("div")
-        const textSpan = document.createElement("span")
-
-        textSpan.innerText = string
-
-        container.appendChild(textSpan)
-        document.getElementById("notes-container").appendChild(container)
-    }
+function createNoteElement(string) {
+    const container = document.createElement("div")
+    const textSpan = document.createElement("span")
+    textSpan.innerText = string
+    container.appendChild(textSpan)
+    document.getElementById("notes-container").appendChild(container)    
 }
 
 
@@ -28,7 +24,7 @@ class NoteReadElement {
 function renderNotes(notes) {
     document.getElementById("notes-container").replaceChildren()
     for(let i = 0; i < notes.length; i++) {
-        new NoteReadElement(notes[i].text)
+        createNoteElement(notes[i].text)
     }
 }
 

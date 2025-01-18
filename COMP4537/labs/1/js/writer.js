@@ -30,11 +30,13 @@ class NoteWriteElement {
         storeToLocalStorage()
     }
 
+    //Updates the text attribute of the note tied to this UIElement and stores to localStorage
     #updateNote() {
         this.note.text = this.textArea.value
         storeToLocalStorage()
     }
 
+    //Removes the note from the array and deletes UI element
     #deleteNote() {
         this.note.removeNote(notes)
         storeToLocalStorage()
@@ -47,10 +49,23 @@ class NoteWriteElement {
     document.getElementById("add-button").innerText = writerAddButton
     document.getElementById("last-stored-text").innerText = writerLastStoredText
     document.getElementById("writer-title").innerText = writerTitle
+    document.getElementById("return-button").innerText = returnBtnText
+
+    //Set eventListeners
+    document.getElementById("add-button").addEventListener("click", (e) => {
+        const note = new Note()
+        notes.push(note)
+        new NoteWriteElement(note)
+    })
+
+    document.getElementById("return-button").addEventListener("click", (e) => {
+        window.location.href="../1/"
+    })
 
     //immediately retrieve data from localStorage
     retrieveFromLocalStorage(notes)
 
+    //if retrieved notes is not empty, populate the notes-container element
     if(notes.length != 0) {
         const container = document.getElementById("notes-container")
         for(let i = 0; i < notes.length; i++) {
@@ -60,18 +75,16 @@ class NoteWriteElement {
     }
 })()
 
-document.getElementById("add-button").addEventListener("click", (e) => {
-    const note = new Note()
-    notes.push(note)
-    new NoteWriteElement(note)
-})
 
+
+//Store the notes array to local storage
 function storeToLocalStorage() {
     const stringifiedArr = JSON.stringify(notes)
     localStorage.setItem("data", stringifiedArr)
     updateTimeStamp()
 }
 
+//Updates the Timestamp UI element
 function updateTimeStamp() {
     const span = document.getElementById("timestamp")
     const currentDate = new Date()
